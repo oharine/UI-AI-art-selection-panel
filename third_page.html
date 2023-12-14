@@ -43,26 +43,40 @@
         if (selectedKeywords) {
             selectedKeywords = JSON.parse(selectedKeywords);
 
-            var imagePath = constructImagePath(selectedKeywords);
+            var basePath = "I:/Image data/";
+            var artStyle = selectedKeywords["Art Style"];
+            var theme = selectedKeywords["Theme"];
+            var subject = selectedKeywords["Subject"];
+
+            // Dummy array for illustration, replace this with actual filenames fetched dynamically
+            var fetchedFilenames = [
+                "Moody.jpg",
+                "Nostalgic.jpg",
+                "Uplifting.jpg",
+                "Chill.jpg",
+                "Moody.png",
+                "Nostalgic.png",
+                "Uplifting.png",
+                "Chill.png",
+                // Add more filenames as needed
+            ];
+
+            // Filter filenames based on the selected keywords
+            var matchingFilenames = fetchedFilenames.filter(filename => {
+                return Object.values(selectedKeywords).some(keyword => filename.toLowerCase().includes(keyword.toLowerCase()));
+            });
+
+            // Choose a random filename if there are matching filenames; otherwise, choose a random filename from all fetched filenames
+            var selectedFilename = matchingFilenames.length > 0
+                ? matchingFilenames[Math.floor(Math.random() * matchingFilenames.length)]
+                : fetchedFilenames[Math.floor(Math.random() * fetchedFilenames.length)];
+
+            var imagePath = basePath + artStyle + "/" + theme + "/" + subject + "/" + selectedFilename;
+
             var generatedImage = document.getElementById("generated-image");
-            
             generatedImage.src = imagePath;
             generatedImage.alt = "Generated Image";
         }
-    }
-
-    function constructImagePath(selectedKeywords) {
-        var basePath = "I:/Image data/";
-        var artStyle = selectedKeywords["Art Style"];
-        var theme = selectedKeywords["Theme"];
-        var subject = selectedKeywords["Subject"];
-
-        var imagePath = `${basePath}${artStyle}/${theme}/${subject}/Generate a chill ${artStyle} styled picture of the ${theme} landscape with ${subject}.jpg`;
-
-        // Replace spaces with %20 in the URL
-        imagePath = imagePath.replace(/ /g, "%20");
-
-        return imagePath;
     }
 </script>
 
