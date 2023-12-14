@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyword Selection Panel</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        #selection-panel {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .keyword-btn {
+            background-color: #91c7ff;
+            color: white;
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+	.generate-btn {
+            background-color: #035ED8;
+            color: white;
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+
+        .keyword-btn:hover {
+            background-color: #45a049;
+        }
+
+	.generate-btn:hover {
+            background-color: #191970;
+        }
+
+        #confirmed-keywords {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div id="selection-panel">
+    <label for="aura">Aura:</label>
+    <div>
+        <button class="keyword-btn" onclick="selectKeyword('Moody')">Moody</button>
+        <button class="keyword-btn" onclick="selectKeyword('Chill')">Chill</button>
+        <button class="keyword-btn" onclick="selectKeyword('Uplifting')">Uplifting</button>
+        <button class="keyword-btn" onclick="selectKeyword('Nostalgic')">Nostalgic</button>
+    </div>
+
+    <label for="theme">Theme:</label>
+    <div>
+        <button class="keyword-btn" onclick="selectKeyword('Futuristic Cities')">Futuristic Cities</button>
+        <button class="keyword-btn" onclick="selectKeyword('Galaxy')">Galaxy</button>
+        <button class="keyword-btn" onclick="selectKeyword('Ocean')">Ocean</button>
+        <button class="keyword-btn" onclick="selectKeyword('Forest')">Forest</button>
+    </div>
+
+    <label for="art-style">Art Style:</label>
+    <div>
+        <button class="keyword-btn" onclick="selectKeyword('Ghibli')">Ghibli</button>
+        <button class="keyword-btn" onclick="selectKeyword('Realistic')">Realistic</button>
+        <button class="keyword-btn" onclick="selectKeyword('Van Gogh')">Van Gogh</button>
+    </div>
+
+    <label for="subject">Subject:</label>
+    <div>
+        <button class="keyword-btn" onclick="selectKeyword('Mermaids')">Mermaids</button>
+        <button class="keyword-btn" onclick="selectKeyword('Superheroes')">Superheroes</button>
+        <button class="keyword-btn" onclick="selectKeyword('Fairy Creatures')">Fairy Creatures</button>
+        <button class="keyword-btn" onclick="selectKeyword('Robots')">Robots</button>
+    </div>
+
+    <button class="generate-btn" onclick="generateArt()">Generate</button>
+</div>
+
+<div id="confirmed-keywords"></div>
+
+<script>
+    var selectedKeywords = {};
+
+    function selectKeyword(keyword) {
+        var category = event.target.parentNode.previousElementSibling.innerText.replace(":", "");
+        selectedKeywords[category] = keyword;
+        updateConfirmedKeywords();
+    }
+
+    function updateConfirmedKeywords() {
+        var confirmedKeywords = document.getElementById("confirmed-keywords");
+        confirmedKeywords.innerHTML = "<p>Confirmed Keywords:</p>";
+
+        for (var category in selectedKeywords) {
+            confirmedKeywords.innerHTML += `<p>${category}: ${selectedKeywords[category]}</p>`;
+        }
+    }
+
+    function generateArt() {
+        // You can modify this function to perform other actions with the selected keywords.
+        localStorage.setItem("selectedKeywords", JSON.stringify(selectedKeywords));
+        window.location.href = "second_page.html"; // Redirect to the second page
+    }
+</script>
+
+</body>
+</html>

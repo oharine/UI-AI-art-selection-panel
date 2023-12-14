@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Second Page</title>
+    <!-- ... (styles) -->
+</head>
+<body>
+
+<div id="display-selected-keywords">
+    <h2>Selected Keywords from Previous Page</h2>
+    <div id="selected-keywords"></div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        displaySelectedKeywords();
+        redirectToThirdPageAfterDelay();
+    });
+
+    function displaySelectedKeywords() {
+        var selectedKeywords = localStorage.getItem("selectedKeywords");
+        if (selectedKeywords) {
+            selectedKeywords = JSON.parse(selectedKeywords);
+
+            var displayKeywords = document.getElementById("selected-keywords");
+            displayKeywords.innerHTML = "<p>Confirmed Keywords:</p>";
+
+            for (var category in selectedKeywords) {
+                displayKeywords.innerHTML += `<p>${category}: ${selectedKeywords[category]}</p>`;
+            }
+        }
+    }
+
+    function redirectToThirdPageAfterDelay() {
+        setTimeout(function () {
+            window.location.href = "third_page.html"; // Redirect to the third page
+        }, 2000); // 2000 milliseconds = 2 seconds
+    }
+</script>
+
+</body>
+</html>

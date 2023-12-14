@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Third Page</title>
+    <!-- ... (styles) -->
+</head>
+<body>
+
+<div id="display-selected-keywords">
+    <h2>Selected Keywords from Previous Page</h2>
+    <div id="selected-keywords"></div>
+</div>
+
+<div id="display-image">
+    <h2>Generated Image</h2>
+    <img id="generated-image" alt="Generated Image">
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        displaySelectedKeywords();
+        displayGeneratedImage();
+    });
+
+    function displaySelectedKeywords() {
+        var selectedKeywords = localStorage.getItem("selectedKeywords");
+        if (selectedKeywords) {
+            selectedKeywords = JSON.parse(selectedKeywords);
+
+            var displayKeywords = document.getElementById("selected-keywords");
+            displayKeywords.innerHTML = "<p>Confirmed Keywords:</p>";
+
+            for (var category in selectedKeywords) {
+                displayKeywords.innerHTML += `<p>${category}: ${selectedKeywords[category]}</p>`;
+            }
+        }
+    }
+
+    function displayGeneratedImage() {
+        var selectedKeywords = localStorage.getItem("selectedKeywords");
+        if (selectedKeywords) {
+            selectedKeywords = JSON.parse(selectedKeywords);
+
+            var imagePath = constructImagePath(selectedKeywords);
+            var generatedImage = document.getElementById("generated-image");
+            
+            generatedImage.src = imagePath;
+            generatedImage.alt = "Generated Image";
+        }
+    }
+
+    function constructImagePath(selectedKeywords) {
+        var basePath = "I:/Image data/";
+        var artStyle = selectedKeywords["Art Style"];
+        var theme = selectedKeywords["Theme"];
+        var subject = selectedKeywords["Subject"];
+
+        var imagePath = `${basePath}${artStyle}/${theme}/${subject}/Generate a chill ${artStyle} styled picture of the ${theme} landscape with ${subject}.jpg`;
+
+        // Replace spaces with %20 in the URL
+        imagePath = imagePath.replace(/ /g, "%20");
+
+        return imagePath;
+    }
+</script>
+
+</body>
+</html>
